@@ -1,4 +1,5 @@
-﻿using Library_Management_System.Models;
+﻿using System;
+using Library_Management_System.Models;
 
 namespace Library_Management_System
 {
@@ -6,117 +7,159 @@ namespace Library_Management_System
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("\t\t\t\t\tWelcome to the Library System Management");
-            Library library = new Library();
-            int numberChoiceByUser = -1;
             do
             {
-                Console.WriteLine("\t\t\t\t\t\tChoose Your Role please:\n" +
-                 "\t\t\t\t\t\t\t1- Librarian\n\t\t\t\t\t\t\t2- Regular User");
-                Console.Write("\t\t\t\t\t\tEnter Your Choice: ");
-                numberChoiceByUser = int.Parse(Console.ReadLine());
-            } while (numberChoiceByUser > 2 || numberChoiceByUser < 1);
-            switch (numberChoiceByUser)
-            {
-                case 1:
+                Console.WriteLine("\t\t\t\t\tWelcome to the Library System Management");
+
+                Library library = new Library();
+
+                int userChoice = GetUserChoice("\t\t\t\t\t\tChoose Your Role:\n" +
+                                               "\t\t\t\t\t\t1- Librarian\n" +
+                                               "\t\t\t\t\t\t2- Regular User\n" +
+                                               "\t\t\t\t\t\t3- Exit\n",
+                                               1, 3);
+
+                if (userChoice == 3)
+                {
+                    Console.WriteLine("\t\t\t\t\tExiting the Library Management System. Goodbye!");
+                    break;
+                }
+
+                if (userChoice == 1)
                     LibrarianMethods(library);
-                    break;
-                case 2:
+                else if (userChoice == 2)
                     UserMethods(library);
-                    break;
-                default:
-                    break;
-            }
+
+            } while (true); // Infinite loop for the program
+        }
+
+        static int GetUserChoice(string prompt, int minChoice, int maxChoice)
+        {
+            int choice;
+            do
+            {
+                Console.WriteLine(prompt);
+                Console.Write("\t\t\t\t\t\tEnter Your Choice: ");
+            } while (!int.TryParse(Console.ReadLine(), out choice) || choice < minChoice || choice > maxChoice);
+
+            return choice;
         }
 
         static void LibrarianMethods(Library library)
         {
             Console.Write("\t\t\t\t\t\tEnter the Librarian Name: ");
-            string name = Console.ReadLine();
-            Librarian librarian = new Librarian(name);
-            Console.WriteLine($"\t\t\t\t\t\t\tWelcome {librarian.Name}");
-            int LibrarianChoice = -1;
-            char repeatedOperations ='N';
+            string librarianName = Console.ReadLine();
+            Librarian librarian = new Librarian(librarianName);
+
+            Console.WriteLine($"\t\t\t\t\t\tWelcome {librarian.Name}");
+
+            char repeatOperation;
             do
             {
-                do
-                {
-                    Console.WriteLine("\t\t\t\t\t\tPlease Enter What you Need To Do:\n" + "\t\t\t\t\t\t\t1- Add Books\n\t\t\t\t\t\t\t2- Remove Books\n\t\t\t\t\t\t\t3- Display Books");
-                    Console.Write("\t\t\t\t\t\tEnter Your Choice: ");
-                    LibrarianChoice = int.Parse(Console.ReadLine());
-                } while (LibrarianChoice < 1 || LibrarianChoice > 3);
+                int choice = GetUserChoice("\t\t\t\t\t\tWhat would you like to do?\n" +
+                                           "\t\t\t\t\t\t1- Add Books\n" +
+                                           "\t\t\t\t\t\t2- Remove Books\n" +
+                                           "\t\t\t\t\t\t3- Display Books\n" +
+                                           "\t\t\t\t\t\t4- Exit\n",
+                                           1, 4);
 
-                switch (LibrarianChoice)
+                if (choice == 4) break;
+
+                switch (choice)
                 {
                     case 1:
-                        Console.WriteLine("\t\t\t\t\t\tEnter Book Details");
-                        Console.Write("\t\t\t\t\t\tTitle: ");
-                        string title = Console.ReadLine();
-                        Console.Write("\t\t\t\t\t\tAuthor: ");
-                        string author = Console.ReadLine();
-                        Console.Write("\t\t\t\t\t\tYear: ");
-                        int year = int.Parse(Console.ReadLine());
-                        Book Book = new Book(title, author, year);
-                        librarian.Add(Book, library);
+                        AddBook(librarian, library);
                         break;
                     case 2:
-                        Console.WriteLine("\t\t\t\t\t\tEnter Book Details");
-                        Console.Write("\t\t\t\t\t\tTitle: ");
-                        title = Console.ReadLine();
-                        librarian.Remove(title, library);
+                        RemoveBook(librarian, library);
                         break;
                     case 3:
-                        Console.WriteLine("\t\t\t\t\t\tThe book list");
-                        librarian.Display(library);
+                        DisplayBooks(librarian, library);
                         break;
-                    default: Environment.Exit(0); break;
                 }
-                Console.WriteLine("\t\t\t\t\t\tDo You Want To Make Another Operation ? (Y/N)");
-                Console.Write("\t\t\t\t\t\tEnter Your Choice: ");
-                repeatedOperations = char.ToLower(char.Parse(Console.ReadLine()));
-            } while (repeatedOperations == 'y');
-            }
 
+                Console.Write("\t\t\t\t\t\tDo you want to perform another operation? (Y/N): ");
+                repeatOperation = char.ToLower(Console.ReadKey().KeyChar);
+                Console.WriteLine();
+            } while (repeatOperation == 'y');
+        }
+
+        static void AddBook(Librarian librarian, Library library)
+        {
+            Console.WriteLine("\t\t\t\t\t\tEnter Book Details:");
+            Console.Write("\t\t\t\t\t\tTitle: ");
+            string title = Console.ReadLine();
+            Console.Write("\t\t\t\t\t\tAuthor: ");
+            string author = Console.ReadLine();
+            Console.Write("\t\t\t\t\t\tYear: ");
+            int year = int.Parse(Console.ReadLine());
+
+            Book book = new Book(title, author, year);
+            librarian.Add(book, library);
+        }
+
+        static void RemoveBook(Librarian librarian, Library library)
+        {
+            Console.Write("\t\t\t\t\t\tEnter the Title of the Book to Remove: ");
+            string title = Console.ReadLine();
+            librarian.Remove(title, library);
+        }
+
+        static void DisplayBooks(Librarian librarian, Library library)
+        {
+            Console.WriteLine("\t\t\t\t\t\tBooks in the Library:");
+            librarian.Display(library);
+        }
 
         static void UserMethods(Library library)
         {
-            User user = new User();
-            Console.WriteLine("Enter User Name: ");
-            string name = Console.ReadLine();
-            LibraryUser libUser = new LibraryUser(name);
-            Console.WriteLine($"Welcome {libUser.Name}");
-            int userChoice = -1;
+            Console.Write("\t\t\t\t\t\tEnter Your Name: ");
+            string userName = Console.ReadLine();
+            LibraryUser user = new LibraryUser(userName);
+
+            Console.WriteLine($"\t\t\t\t\t\tWelcome {user.Name}");
+
             do
             {
-                Console.WriteLine("\t\t\t\t\t\tPlease Enter What you Need To Do:\n" + "\t\t\t\t\t\t\t1- Borrow Books\n\t\t\t\t\t\t\t2- Display Books");
-                Console.WriteLine("Please Enter Your Choice: ");
-                userChoice = int.Parse(Console.ReadLine());
+                int choice = GetUserChoice("\t\t\t\t\t\tWhat would you like to do?\n" +
+                                           "\t\t\t\t\t\t1- Borrow Books\n" +
+                                           "\t\t\t\t\t\t2- Display Books\n" +
+                                           "\t\t\t\t\t\t3- Exit\n",
+                                           1, 3);
 
-            } while (userChoice < 1 || userChoice > 2);
+                if (choice == 3) break;
 
-            switch (userChoice)
-            {
-                case 1:
-                    Console.WriteLine("Enter Book Details to borrow");
-                    Console.Write("Title: ");
-                    string title = Console.ReadLine();
-                    Console.Write("Author: ");
-                    string author = Console.ReadLine();
-                    Console.Write("Year: ");
-                    int year = int.Parse(Console.ReadLine());
-                    Book Book = new Book(title, author, year);
-                    user.BorrowBook(Book, library);
-                    break;
-                case 2:
-                    Console.WriteLine("The book list");
-                    user.DisplayBook(library);
-                    break;
-                default: Environment.Exit(0); break;
-            }
+                switch (choice)
+                {
+                    case 1:
+                        BorrowBook(user, library);
+                        break;
+                    case 2:
+                        DisplayUserBooks(user, library);
+                        break;
+                }
 
-
-
+            } while (true);
         }
 
+        static void BorrowBook(LibraryUser user, Library library)
+        {
+            Console.WriteLine("\t\t\t\t\t\tEnter Book Details to Borrow:");
+            Console.Write("\t\t\t\t\t\tTitle: ");
+            string title = Console.ReadLine();
+            Console.Write("\t\t\t\t\t\tAuthor: ");
+            string author = Console.ReadLine();
+            Console.Write("\t\t\t\t\t\tYear: ");
+            int year = int.Parse(Console.ReadLine());
+
+            Book book = new Book(title, author, year);
+            user.BorrowBook(book, library);
+        }
+
+        static void DisplayUserBooks(LibraryUser user, Library library)
+        {
+            Console.WriteLine("\t\t\t\t\t\tBooks in the Library:");
+            user.DisplayBook(library);
+        }
     }
 }

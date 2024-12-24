@@ -16,6 +16,7 @@ namespace Library_Management_System.Models
         }
         public void BorrowBook(Book book , Library library)
         {
+            library.BorrowBook(book);
 
         }
     }
