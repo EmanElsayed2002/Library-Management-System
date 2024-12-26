@@ -33,7 +33,7 @@
                         Member member = new Member();
                         Console.Write("Member Name: ");
                         member.Name = Console.ReadLine();
-                        Console.Write("Member Author: ");
+                        Console.Write("Member ID: ");
                         member.UserID = Console.ReadLine();
                         library.AddMember(member);
                         break;
@@ -65,9 +65,9 @@
                     default:
                         Console.WriteLine("GoodBye!!");
                         Environment.Exit(0);
-                        break;
+                        return;
                 }
-                Console.WriteLine("Do Tou need Another Process(Y/N)");
+                Console.Write("Do Tou need Another Process(Y/N): ");
                 ch = char.ToLower(char.Parse(Console.ReadLine()));
             } while (ch == 'y');
         }
