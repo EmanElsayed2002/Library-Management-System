@@ -12,3 +12,13 @@ D:\Solution1\Library Management System\obj\Debug\net8.0\refint\Library Managemen
 D:\Solution1\Library Management System\obj\Debug\net8.0\Library Management System.pdb
 D:\Solution1\Library Management System\obj\Debug\net8.0\Library Management System.genruntimeconfig.cache
 D:\Solution1\Library Management System\obj\Debug\net8.0\ref\Library Management System.dll
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\bin\Debug\net8.0\Library Management System.exe
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\bin\Debug\net8.0\Library Management System.dll
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.AssemblyInfoInputs.cache
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.AssemblyInfo.cs
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.csproj.CoreCompileInputs.cache
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.sourcelink.json
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.dll
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\refint\Library Management System.dll
+C:\Users\CONNECT\Desktop\OOP Projects\Library-Management-System\Library Management System\obj\Debug\net8.0\Library Management System.pdb
